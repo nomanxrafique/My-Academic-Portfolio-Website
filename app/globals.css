@@ -1,0 +1,316 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   DESIGN TOKENS
+   A restrained academic palette: paper-white grounds, deep navy structure,
+   slate text, and a single blue accent used sparingly for emphasis.
+   ========================================================================== */
+
+:root {
+  --font-sans: 'Inter Variable', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  /* Light mode */
+  --bg: #ffffff;
+  --bg-subtle: #f7f8fa;
+  --bg-card: #ffffff;
+  --bg-inset: #f2f4f8;
+
+  --fg: #16202f;
+  --fg-muted: #4d5a6c;
+  --fg-subtle: #6b7888;
+
+  --border: #e2e6ec;
+  --border-strong: #cdd4de;
+
+  --accent: #1d6fb8;
+  --accent-soft: #eaf2fa;
+  --accent-border: #bcd7ee;
+
+  --shadow-card: 0 1px 2px rgba(16, 24, 40, 0.04), 0 1px 3px rgba(16, 24, 40, 0.06);
+  --shadow-raised: 0 4px 12px rgba(16, 24, 40, 0.07), 0 1px 3px rgba(16, 24, 40, 0.05);
+}
+
+.dark {
+  --bg: #0d1521;
+  --bg-subtle: #111b2b;
+  --bg-card: #131e2e;
+  --bg-inset: #0f1826;
+
+  --fg: #e9eef5;
+  --fg-muted: #a3b0c2;
+  --fg-subtle: #8494a8;
+
+  --border: #223044;
+  --border-strong: #2f3f56;
+
+  --accent: #6bacdf;
+  --accent-soft: #15263a;
+  --accent-border: #26415f;
+
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-raised: 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+
+/* ==========================================================================
+   BASE
+   ========================================================================== */
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Offset for the sticky header when jumping to an anchor. */
+    scroll-padding-top: 5.5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--fg);
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Visible, consistent focus ring for keyboard users. */
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+
+  ::selection {
+    background: var(--accent-soft);
+    color: var(--fg);
+  }
+}
+
+/* ==========================================================================
+   COMPONENT PRIMITIVES
+   ========================================================================== */
+
+@layer components {
+  .container-academic {
+    @apply mx-auto w-full max-w-content px-5 sm:px-8 lg:px-10;
+  }
+
+  .section {
+    @apply scroll-mt-24 border-t py-16 sm:py-20 lg:py-24;
+    border-color: var(--border);
+  }
+
+  /* Small uppercase monospace eyebrow used above every section heading. */
+  .eyebrow {
+    @apply font-mono text-[0.7rem] font-medium uppercase tracking-[0.18em];
+    color: var(--accent);
+  }
+
+  .section-title {
+    @apply mt-3 text-2xl font-semibold sm:text-3xl;
+  }
+
+  .section-lede {
+    @apply mt-3 max-w-prose text-[0.975rem] leading-relaxed;
+    color: var(--fg-muted);
+  }
+
+  .card {
+    @apply rounded-lg border p-5 sm:p-6;
+    background-color: var(--bg-card);
+    border-color: var(--border);
+    box-shadow: var(--shadow-card);
+  }
+
+  .card-interactive {
+    @apply transition-[box-shadow,border-color,transform] duration-200;
+  }
+
+  .card-interactive:hover {
+    border-color: var(--border-strong);
+    box-shadow: var(--shadow-raised);
+  }
+
+  /* Buttons ---------------------------------------------------------------- */
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-md px-4 py-2.5 text-sm font-medium transition-colors duration-150;
+  }
+
+  .btn-primary {
+    background-color: var(--accent);
+    color: #ffffff;
+  }
+
+  .btn-primary:hover {
+    filter: brightness(1.08);
+  }
+
+  .dark .btn-primary {
+    color: #0d1521;
+  }
+
+  .btn-secondary {
+    @apply border;
+    background-color: var(--bg-card);
+    border-color: var(--border-strong);
+    color: var(--fg);
+  }
+
+  .btn-secondary:hover {
+    background-color: var(--bg-inset);
+  }
+
+  .btn-ghost {
+    color: var(--fg-muted);
+  }
+
+  .btn-ghost:hover {
+    background-color: var(--bg-inset);
+    color: var(--fg);
+  }
+
+  /* Tags ------------------------------------------------------------------- */
+
+  .tag {
+    @apply inline-flex items-center rounded border px-2 py-0.5 font-mono text-[0.72rem] leading-5;
+    background-color: var(--bg-inset);
+    border-color: var(--border);
+    color: var(--fg-muted);
+  }
+
+  .tag-accent {
+    background-color: var(--accent-soft);
+    border-color: var(--accent-border);
+    color: var(--accent);
+  }
+
+  /* Placeholder styling — deliberately obvious so it never ships by accident. */
+  .placeholder-block {
+    border-style: dashed;
+    border-color: var(--border-strong);
+    background-color: var(--bg-subtle);
+    box-shadow: none;
+  }
+
+  .link-accent {
+    color: var(--accent);
+    @apply underline decoration-1 underline-offset-[3px] transition-opacity;
+    text-decoration-color: var(--accent-border);
+  }
+
+  .link-accent:hover {
+    text-decoration-color: var(--accent);
+  }
+
+  /* Theme toggle icons ------------------------------------------------------
+     Both icons are rendered; CSS decides which is visible. This keeps the
+     button identical on server and client. */
+
+  .theme-icon-dark {
+    display: none;
+  }
+
+  .dark .theme-icon-dark {
+    display: block;
+  }
+
+  .dark .theme-icon-light {
+    display: none;
+  }
+
+  /* Mobile menu icon --------------------------------------------------------
+     Same approach as the theme icons: both are present, aria-expanded decides. */
+
+  .menu-icon-open {
+    display: none;
+  }
+
+  [aria-expanded='true'] .menu-icon-open {
+    display: block;
+  }
+
+  [aria-expanded='true'] .menu-icon-closed {
+    display: none;
+  }
+
+  /* Skip link -------------------------------------------------------------- */
+
+  .skip-link {
+    @apply absolute left-4 top-4 z-[100] -translate-y-24 rounded-md px-4 py-2 text-sm font-medium transition-transform;
+    background-color: var(--accent);
+    color: #ffffff;
+  }
+
+  .skip-link:focus {
+    @apply translate-y-0;
+  }
+}
+
+/* ==========================================================================
+   MOTION
+   Animations are opt-out by default via prefers-reduced-motion.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Subtle grid texture for the hero only. Kept extremely low contrast so it
+   reads as paper, not as a "cyber" background. */
+.hero-grid {
+  background-image:
+    linear-gradient(to right, var(--border) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 75%);
+  opacity: 0.5;
+}
+
+/* Print: produce something usable if a professor prints the page. */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+  }
+
+  .section {
+    break-inside: avoid;
+    padding: 1rem 0;
+  }
+}

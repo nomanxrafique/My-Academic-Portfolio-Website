@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+# Update the host and sitemap lines after your first deployment.
